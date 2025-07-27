@@ -8,8 +8,35 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject private var viewModel = HomeViewModel()
+    var body: some View {
+        TabView {
+            HomeTabView()
+                .tabItem {
+                    Image(systemName: "house.fill")
+                }
+            SearchView()
+                .tabItem {
+                    Image(systemName: "magnifyingglass")
+                }
+            FavoritesView()
+                .tabItem {
+                    Image(systemName: "heart.fill")
+                }
+            ProfileView()
+                .tabItem {
+                    Image(systemName: "person.fill")
+                }
+        }
+        .accentColor(.white)
+        .preferredColorScheme(.dark)
+        .environment(\.layoutDirection, .rightToLeft)
+    }
+}
+
+struct HomeTabView: View {
     
+    @StateObject private var viewModel = HomeViewModel()
+
     var body: some View {
         VStack(spacing: 0) {
             MainNavigationBarView()
@@ -20,7 +47,7 @@ struct ContentView: View {
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .padding(.top, 100)
                 } else if viewModel.sections.isEmpty {
-                    Text("No content available")
+                    Text("لا يوجد محتوى")
                         .foregroundColor(.gray)
                         .padding(.top, 100)
                 } else {
@@ -37,23 +64,37 @@ struct ContentView: View {
             }
         }
         .background(Color.black)
-        .preferredColorScheme(.dark)
-        .environment(\.layoutDirection, .rightToLeft)
         .onAppear {
             Task {
                 await viewModel.loadHomeSections()
             }
         }
-        .alert("Error", isPresented: .constant(viewModel.error != nil)) {
-            Button("OK") {
-                viewModel.error = nil
-            }
-        } message: {
-            Text(viewModel.error?.localizedDescription ?? "Unknown error")
-        }
     }
 }
 
-#Preview {
-    ContentView()
+struct SearchView: View {
+    var body: some View {
+        Text("بحث")
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color.black)
+            .foregroundColor(.white)
+    }
+}
+
+struct FavoritesView: View {
+    var body: some View {
+        Text("المفضلة")
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color.black)
+            .foregroundColor(.white)
+    }
+}
+
+struct ProfileView: View {
+    var body: some View {
+        Text("الحساب")
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color.black)
+            .foregroundColor(.white)
+    }
 }

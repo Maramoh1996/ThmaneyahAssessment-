@@ -9,6 +9,12 @@ import SwiftUI
 
 @main
 struct ThmaneyahAssessmentApp: App {
+    
+    init() {
+        let tabBarAppearance = UITabBar.appearance()
+        tabBarAppearance.backgroundColor = UIColor.black
+    }
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
