@@ -8,13 +8,15 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject private var viewModel = HomeViewModel()
+    
     var body: some View {
         TabView {
-            HomeTabView()
+            HomeTabView(viewModel: viewModel)
                 .tabItem {
                     Image(systemName: "house.fill")
                 }
-            SearchView()
+            SearchView(sections: viewModel.sections)
                 .tabItem {
                     Image(systemName: "magnifyingglass")
                 }
@@ -34,9 +36,8 @@ struct ContentView: View {
 }
 
 struct HomeTabView: View {
+    @ObservedObject var viewModel: HomeViewModel
     
-    @StateObject private var viewModel = HomeViewModel()
-
     var body: some View {
         VStack(spacing: 0) {
             MainNavigationBarView()
@@ -69,15 +70,6 @@ struct HomeTabView: View {
                 await viewModel.loadHomeSections()
             }
         }
-    }
-}
-
-struct SearchView: View {
-    var body: some View {
-        Text("بحث")
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color.black)
-            .foregroundColor(.white)
     }
 }
 

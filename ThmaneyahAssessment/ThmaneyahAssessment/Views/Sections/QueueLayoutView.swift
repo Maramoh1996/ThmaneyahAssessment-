@@ -41,7 +41,7 @@ struct QueueLayoutView: View {
                     
                     Spacer()
                     
-                    Image(systemName: "chevron.right")
+                    Image(systemName: "chevron.left")
                         .foregroundColor(.secondary)
                 }
                 .padding(.horizontal)
